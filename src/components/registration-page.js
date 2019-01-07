@@ -10,12 +10,15 @@ export function RegistrationPage(props) {
     if (props.loggedIn) {
         return <Redirect to="/dashboard" />;
     }
+    const loginButton = (<button>Return to Login</button>);
+    const loginLink = (<Link to="/" className="login-link">{loginButton}</Link>);
+    const title = (<h2 className="login-title">Sign up to learn!</h2>);
     return (
-        <div className="home">
-            <h2>Register for Foo App</h2>
+        <main className="registration">
+            {title}
             <RegistrationForm />
-            <Link to="/">Login</Link>
-        </div>
+            {loginLink}
+        </main>
     );
 }
 

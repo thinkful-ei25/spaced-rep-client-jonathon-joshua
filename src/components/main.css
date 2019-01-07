@@ -70,3 +70,20 @@
   text-align: center;
   width: 100%
 }
+
+.registration{
+  text-align: center;
+}
+
+.registration button{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login-title{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-size: 25px;
+}
+
