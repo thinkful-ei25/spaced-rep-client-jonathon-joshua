@@ -1,7 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {clearAuth} from '../actions/auth';
-import {clearAuthToken} from '../local-storage';
+import { connect } from 'react-redux';
+import { clearAuth } from '../actions/auth';
+import { clearAuthToken } from '../local-storage';
+import './navbar.css';
+import { Link } from "react-router-dom";
+
 
 export class HeaderBar extends React.Component {
     logOut() {
@@ -9,19 +12,32 @@ export class HeaderBar extends React.Component {
         clearAuthToken();
     }
 
+
+
     render() {
+        const logOutButton = (<button onClick={() => this.logOut()}>Log out</button>);
+        const logoLink = (<Link to='/' className="left" >Logo</Link>);
         // Only render the log out button if we are logged in
-        let logOutButton;
+        const navBar = (<nav className="navbar">
+
+            <h1><ul>
+                <li className="logo">{logoLink}</li>
+            </ul>
+            </h1>
+        </nav>);
         if (this.props.loggedIn) {
-            logOutButton = (
-                <button onClick={() => this.logOut()}>Log out</button>
-            );
+            const navBar = (<nav className="navbar">
+
+                <h1><ul>
+                    <li className="logo">logo</li>
+                    <li>{logOutButton}</li>
+                </ul>
+                </h1>
+            </nav>);
         }
         return (
-            <div className="header-bar">
-                <h1>Foo App</h1>
-                {logOutButton}
-            </div>
+            <main>{navBar}</main>
+
         );
     }
 }
