@@ -27,7 +27,8 @@ export function LandingPage(props) {
 </h2>
     </div>)
     const login = (<LoginForm />);
-    const register = (<Link to="/register">Register</Link>);
+    const regButton = (<button>Register</button>);
+    const register = (<div className="register"><Link to="/register">{regButton}</Link></div>);
     const wrapped = (<div className="wrapper">{aboutBox}{login}{register}</div>);
     return (
         <main className="splash-page">

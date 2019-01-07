@@ -26,7 +26,7 @@ export class LoginForm extends React.Component {
                 )}>
                 {error}
                 <div className="login-form-section">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username"></label>
                     <Field
                         component={Input}
                         type="text"
@@ -36,7 +36,7 @@ export class LoginForm extends React.Component {
                     />
                 </div>
                 <div className="login-form-section">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password"></label>
                     <Field
                         component={Input}
                         type="password"
