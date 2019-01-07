@@ -46,5 +46,19 @@
 
 .login-form{
   display: block;
+  text-align: center;
+}
+
+.login-form-section{
+  display: flex;
   justify-content: center;
+}
+
+.login-form-section > label{
+  width: 10%;
+}
+
+.login{
+  margin-top: 2.5%;
+  width: 15%;
 }
