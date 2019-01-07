@@ -25,7 +25,6 @@
 }
 
 .about h1{
-  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 40px;
 }
@@ -45,6 +44,7 @@
 }
 
 .login-form{
+  margin-top: 3%;
   display: block;
   text-align: center;
 }
@@ -64,8 +64,8 @@
 }
 
 .register{
-  margin-top:1%;
-  margin-bottom: 1%;
+  margin-top:2%;
+  margin-bottom: 2%;
   display: inline-block;
   text-align: center;
   width: 100%
