@@ -6,8 +6,14 @@ import LinkedList from '../algorithms/linkedList';
 
 
 export class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            word: undefined,
+            correct: false
+        }
+    }
     linkedList = new LinkedList();
-    state = {word: undefined};
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
@@ -32,18 +38,22 @@ export class Dashboard extends React.Component {
 
     submitAnswer(e) {
         e.preventDefault();
-        if(this.input.value === this.state.word.esperantoAnswer){
+        if (this.input.value === this.state.word.esperantoAnswer) {
             let anything = Object.assign({}, this.state.word);
             anything.score = 1;
-            this.setState({word: anything});
+            this.setState({
+                word: anything,
+                correct: true
+            });
             console.log(anything);
-            alert('You got it right!');
-        }else{
+        } else {
             let anything = Object.assign({}, this.state.word);
             anything.score = anything.score * 2;
-            this.setState({word: anything});
+            this.setState({
+                word: anything,
+                correct: false
+            });
             console.log(anything);
-            alert('You got it wrong!')
         }
     }
 
@@ -58,14 +68,14 @@ export class Dashboard extends React.Component {
             console.log('pushed ' + this.props.protectedData[i])
         }
         this.setState({
-            word : this.linkedList.pop()
+            word: this.linkedList.pop()
         })
     }
 
     nextWord() {
         this.linkedList.push(this.state.word);
         this.setState({
-            word : this.linkedList.pop()
+            word: this.linkedList.pop()
         })
     }
 
@@ -81,7 +91,12 @@ export class Dashboard extends React.Component {
             </label>
             <input type="submit" value="Submit" />
         </form>);
-
+        let nextButton = '';
+        let gotRight = '';
+        if(this.state.correct){
+            gotRight = (<p>You got it right!</p>);
+            nextButton = (<button onClick={() => this.nextWord()}>Next</button>);
+        }
         // let submitButton = ();
         let guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
         return (
@@ -92,7 +107,8 @@ export class Dashboard extends React.Component {
                 <div className="dashboard-protected-data">
                     {/* Select a category: {this.showCats()} */}
                     {guessField}
-                    <button onClick={() => this.nextWord()}>Next</button>
+                    {gotRight}
+                    {nextButton}
                 </div>
             </div>
         );
