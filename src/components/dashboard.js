@@ -7,7 +7,7 @@ import LinkedList from '../algorithms/linkedList';
 
 export class Dashboard extends React.Component {
     linkedList = new LinkedList();
-    word = '';
+    state = {word: undefined};
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
@@ -50,16 +50,22 @@ export class Dashboard extends React.Component {
             this.linkedList.push(this.props.protectedData[i]);
             console.log('pushed ' + this.props.protectedData[i])
         }
-        console.log(this.linkedList.print());
+        this.setState({
+            word : this.linkedList.pop()
+        })
+    }
+
+    nextWord() {
+        this.linkedList.push(this.state.word);
+        this.setState({
+            word : this.linkedList.pop()
+        })
     }
 
     render() {
-
-        if (this.props.protectedData.length > 2) {
+        if (!this.linkedList.head) {
             this.initiateQuestionDatabase()
-        }
-        if (this.linkedList) {
-            this.word = (this.props.protectedData[0].esperantoWord);
+            console.log('rendering linked list');
         }
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
@@ -70,9 +76,7 @@ export class Dashboard extends React.Component {
         </form>);
 
         // let submitButton = ();
-        let guessField = (<div >{this.word}{entry}</div>);
-
-        console.log(this.props.protectedData)
+        let guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
         return (
             <div className="dashboard">
                 <div className="dashboard-username">
@@ -81,7 +85,7 @@ export class Dashboard extends React.Component {
                 <div className="dashboard-protected-data">
                     {/* Select a category: {this.showCats()} */}
                     {guessField}
-
+                    <button onClick={() => this.nextWord()}>Next</button>
                 </div>
             </div>
         );

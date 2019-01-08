@@ -24,7 +24,10 @@ export default class LinkedList {
   }
 
   pop(){
-    let temp = this.head;
+    if(this.head === null){
+      return '';
+    }
+    let temp = this.head.data;
     this.head = this.head.next;
     return temp;
   }
