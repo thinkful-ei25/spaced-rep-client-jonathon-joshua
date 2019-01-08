@@ -7,19 +7,32 @@ export class Dashboard extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
-    setFilter(e){
+    setFilter(e) {
         console.log(e);
     }
-    showCats(){
+    showCats() {
         let animalButton = (<li><button onClick={e => this.setFilter(e)}>Animals</button></li>);
         let foodButton = (<li><button>Food</button></li>);
         let list = (<ul>{animalButton}{foodButton}</ul>)
         return (list);
     }
 
-    submitAnswer(e){
+    guessedWrong(){
+        console.log('Wrong');
+    }
+
+    guessedRight(){
+        console.log('Right');
+    }
+
+    submitAnswer(e) {
         e.preventDefault();
-        console.log(e.value);
+        if (this.input.value === this.props.protectedData[0].esperantoAnswer) {
+            this.guessedRight();
+        } else
+            this.guessedWrong();
+        console.log(this.input.value);
+
     }
 
     render() {
@@ -27,13 +40,13 @@ export class Dashboard extends React.Component {
         let word = (this.props.protectedData[0].esperantoWord);
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
-              Answer:
-              <input type="text" name="name" />
+                Answer:
+              <input type="text" name="name" ref={node => (this.input = node)} />
             </label>
             <input type="submit" value="Submit" />
-          </form>);
+        </form>);
         // let submitButton = ();
-        let guessField = (<div>{word}{entry}</div>);
+        let guessField = (<div >{word}{entry}</div>);
         console.log(this.props.protectedData)
         return (
             <div className="dashboard">
