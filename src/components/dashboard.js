@@ -32,12 +32,19 @@ export class Dashboard extends React.Component {
 
     submitAnswer(e) {
         e.preventDefault();
-        if (this.input.value === this.props.protectedData[0].esperantoAnswer) {
-            this.guessedRight();
-        } else
-            this.guessedWrong();
-        console.log(this.input.value);
-
+        if(this.input.value === this.state.word.esperantoAnswer){
+            let anything = Object.assign({}, this.state.word);
+            anything.score = 1;
+            this.setState({word: anything});
+            console.log(anything);
+            alert('You got it right!');
+        }else{
+            let anything = Object.assign({}, this.state.word);
+            anything.score = anything.score * 2;
+            this.setState({word: anything});
+            console.log(anything);
+            alert('You got it wrong!')
+        }
     }
 
     initiateQuestionDatabase() {
