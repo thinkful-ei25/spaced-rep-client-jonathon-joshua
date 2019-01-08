@@ -1,22 +1,35 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
-import {fetchProtectedData} from '../actions/protected-data';
+import { fetchProtectedData } from '../actions/protected-data';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
 
+    // listCategories() {
+    //     let returnString = '<li>'
+    //     for(let i = 0; i < this.props.protectedData.length; i++){
+    //         console.log(this.props.protectedData[i]);
+    //         returnString += this.props.protectedData[i].category;
+    //         returnString += '</li>';
+    //     }
+    //     return returnString;
+    // }
+
     render() {
+        // let data = (this.props.protectedData.data);
+        console.log(this.props);
         return (
             <div className="dashboard">
                 <div className="dashboard-username">
-                    Username: {this.props.username}
+                    Welcome: {this.props.username}
                 </div>
-                <div className="dashboard-name">Name: {this.props.name}</div>
                 <div className="dashboard-protected-data">
-                    Protected data: {this.props.protectedData}
+                    {/* Select a category: <ul>{this.listCategories()}</ul> */}
+
+
                 </div>
             </div>
         );
@@ -24,7 +37,7 @@ export class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const {currentUser} = state.auth;
+    const { currentUser } = state.auth;
     return {
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
