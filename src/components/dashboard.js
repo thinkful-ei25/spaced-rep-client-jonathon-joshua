@@ -19,7 +19,7 @@ export class Dashboard extends React.Component {
 
     submitAnswer(e){
         e.preventDefault();
-        console.log(e.value);
+        console.log(this.inputNode.value);
     }
 
     render() {
@@ -28,7 +28,7 @@ export class Dashboard extends React.Component {
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
               Answer:
-              <input type="text" name="name" />
+              <input type="text" name="name" ref={node => (this.inputNode = node)}/>
             </label>
             <input type="submit" value="Submit" />
           </form>);
