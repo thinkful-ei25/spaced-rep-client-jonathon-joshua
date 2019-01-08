@@ -4,7 +4,10 @@ import requiresLogin from './requires-login';
 import { fetchProtectedData } from '../actions/protected-data';
 import LinkedList from '../algorithms/linkedList';
 
+
 export class Dashboard extends React.Component {
+    linkedList = new LinkedList();
+    word = '';
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
@@ -18,12 +21,12 @@ export class Dashboard extends React.Component {
         return (list);
     }
 
-    guessedWrong(){
-        
+    guessedWrong() {
+
         console.log('Wrong');
     }
 
-    guessedRight(){
+    guessedRight() {
         console.log('Right');
     }
 
@@ -37,30 +40,27 @@ export class Dashboard extends React.Component {
 
     }
 
-    initiateQuestionDatabase(){
-        console.log('--------------------');
-        console.log(this.props.protectedData);
-        console.log('--------------------');
-        if(this.props.protectedData.length < 2){
+    initiateQuestionDatabase() {
+        if (this.props.protectedData.length < 2) {
             console.log('returning');
             return;
         }
-
-        const linkedList = new LinkedList();
         console.log(this.props.protectedData.length);
-        for(let i = 0; i < this.props.protectedData.length; i++){
-            linkedList.push(this.props.protectedData[i]);
-            console.log('pushing: ' + this.props.protectedData[i]);
+        for (let i = 0; i < this.props.protectedData.length; i++) {
+            this.linkedList.push(this.props.protectedData[i]);
+            console.log('pushed ' + this.props.protectedData[i])
         }
-        console.log(linkedList.print());
+        console.log(this.linkedList.print());
     }
 
     render() {
-        console.log(this.props.protectedData[0].esperantoWord);
-        if(!this.props.questionDatabase){
-            this.initiateQuestionDatabase();
+
+        if (this.props.protectedData.length > 2) {
+            this.initiateQuestionDatabase()
         }
-        let word = (this.props.protectedData[0].esperantoWord);
+        if (this.linkedList) {
+            this.word = (this.props.protectedData[0].esperantoWord);
+        }
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
                 Answer:
@@ -68,8 +68,10 @@ export class Dashboard extends React.Component {
             </label>
             <input type="submit" value="Submit" />
         </form>);
+
         // let submitButton = ();
-        let guessField = (<div >{word}{entry}</div>);
+        let guessField = (<div >{this.word}{entry}</div>);
+
         console.log(this.props.protectedData)
         return (
             <div className="dashboard">
@@ -86,11 +88,11 @@ export class Dashboard extends React.Component {
     }
 }
 
+
 const mapStateToProps = state => {
     const { currentUser } = state.auth;
     return {
         username: state.auth.currentUser.username,
-        questionDatabase: null,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories
