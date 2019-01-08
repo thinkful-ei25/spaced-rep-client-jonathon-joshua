@@ -18,6 +18,7 @@ export class Dashboard extends React.Component {
     }
 
     guessedWrong(){
+        
         console.log('Wrong');
     }
 
