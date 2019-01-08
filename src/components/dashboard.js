@@ -7,16 +7,15 @@ export class Dashboard extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchProtectedData());
     }
-
-    // listCategories() {
-    //     let returnString = '<li>'
-    //     for(let i = 0; i < this.props.protectedData.length; i++){
-    //         console.log(this.props.protectedData[i]);
-    //         returnString += this.props.protectedData[i].category;
-    //         returnString += '</li>';
-    //     }
-    //     return returnString;
-    // }
+    setFilter(e){
+        console.log(e);
+    }
+    showCats(){
+        let animalButton = (<li><button onClick={e => this.setFilter(e)}>Animals</button></li>);
+        let foodButton = (<li><button>Food</button></li>);
+        let list = (<ul>{animalButton}{foodButton}</ul>)
+        return (list);
+    }
 
     render() {
         console.log(this.props.protectedData)
@@ -26,7 +25,7 @@ export class Dashboard extends React.Component {
                     Welcome: {this.props.username}
                 </div>
                 <div className="dashboard-protected-data">
-                    {/* Select a category: <ul>{this.listCategories()}</ul> */}
+                    Select a category: {this.showCats()}
 
 
                 </div>
@@ -40,7 +39,8 @@ const mapStateToProps = state => {
     return {
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
-        protectedData: state.protectedData.data
+        protectedData: state.protectedData.data,
+        categories: state.protectedData.categories
     };
 };
 
