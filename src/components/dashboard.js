@@ -19,8 +19,7 @@ export class Dashboard extends React.Component {
     // }
 
     render() {
-        // let data = (this.props.protectedData.data);
-        console.log(this.props);
+        console.log(this.props.protectedData)
         return (
             <div className="dashboard">
                 <div className="dashboard-username">
