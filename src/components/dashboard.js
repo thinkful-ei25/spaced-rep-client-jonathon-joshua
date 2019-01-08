@@ -17,7 +17,23 @@ export class Dashboard extends React.Component {
         return (list);
     }
 
+    submitAnswer(e){
+        e.preventDefault();
+        console.log(e.value);
+    }
+
     render() {
+        console.log(this.props.protectedData[0].esperantoWord);
+        let word = (this.props.protectedData[0].esperantoWord);
+        let entry = (<form onSubmit={e => this.submitAnswer(e)}>
+            <label>
+              Answer:
+              <input type="text" name="name" />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>);
+        // let submitButton = ();
+        let guessField = (<div>{word}{entry}</div>);
         console.log(this.props.protectedData)
         return (
             <div className="dashboard">
@@ -25,8 +41,8 @@ export class Dashboard extends React.Component {
                     Welcome: {this.props.username}
                 </div>
                 <div className="dashboard-protected-data">
-                    Select a category: {this.showCats()}
-
+                    {/* Select a category: {this.showCats()} */}
+                    {guessField}
 
                 </div>
             </div>
