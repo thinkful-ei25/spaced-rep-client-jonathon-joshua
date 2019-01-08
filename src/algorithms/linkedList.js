@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class LinkedList {
+export default class LinkedList {
   constructor(){
     this.head = null;
     this.tail = null;
@@ -27,5 +27,18 @@ class LinkedList {
     let temp = this.head;
     this.head = this.head.next;
     return temp;
+  }
+
+  print(){
+    if(this.head === null){
+      return 'head is null';
+    }
+    let temp = this.head;
+    let string = '';
+    while(temp){
+      temp.next === null ? string += temp.data.esperantoWord : string += temp.data.esperantoWord + ' -> ';
+      temp = temp.next;
+    }
+    return string;
   }
 }

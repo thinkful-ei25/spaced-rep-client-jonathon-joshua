@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from './requires-login';
 import { fetchProtectedData } from '../actions/protected-data';
+import LinkedList from '../algorithms/linkedList';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
@@ -36,8 +37,29 @@ export class Dashboard extends React.Component {
 
     }
 
+    initiateQuestionDatabase(){
+        console.log('--------------------');
+        console.log(this.props.protectedData);
+        console.log('--------------------');
+        if(this.props.protectedData.length < 2){
+            console.log('returning');
+            return;
+        }
+
+        const linkedList = new LinkedList();
+        console.log(this.props.protectedData.length);
+        for(let i = 0; i < this.props.protectedData.length; i++){
+            linkedList.push(this.props.protectedData[i]);
+            console.log('pushing: ' + this.props.protectedData[i]);
+        }
+        console.log(linkedList.print());
+    }
+
     render() {
         console.log(this.props.protectedData[0].esperantoWord);
+        if(!this.props.questionDatabase){
+            this.initiateQuestionDatabase();
+        }
         let word = (this.props.protectedData[0].esperantoWord);
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
@@ -68,6 +90,7 @@ const mapStateToProps = state => {
     const { currentUser } = state.auth;
     return {
         username: state.auth.currentUser.username,
+        questionDatabase: null,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories
