@@ -45,10 +45,7 @@ export class Learning extends React.Component {
     render() {
         let category = this.props.location.state.category;
         console.log(this.props.protectedData[category]);
-        // console.log(this.props.head['head']);
-        for(let keys in this.props.head){
-            console.log(keys);
-        }
+        console.log(this.props.head);
         let questionField;
         if (this.state.answered) {
             questionField = (<h3>{this.state.answered}</h3>)
@@ -89,7 +86,7 @@ const mapStateToProps = state => {
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories,
         userId: currentUser._id,
-        head: state.protectedData.head.questions
+        head: state.protectedData.head
     };
 };
 

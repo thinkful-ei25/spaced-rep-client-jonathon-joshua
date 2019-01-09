@@ -30,7 +30,7 @@ export const fetchHead = (userId) => (dispatch, getState) => {
     })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then((head) => dispatch(fetchHeadSuccess(head)))
+    .then((head) => dispatch(fetchHeadSuccess(head.questions.head)))
     .catch(err => {
         dispatch(fetchProtectedDataError(err));
     });
