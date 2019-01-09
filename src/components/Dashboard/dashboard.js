@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import requiresLogin from './requires-login';
-import { fetchProtectedData } from '../actions/protected-data';
-import LinkedList from '../algorithms/linkedList';
-
+import requiresLogin from '../requires-login';
+import { fetchProtectedData } from '../../actions/protected-data';
+import LinkedList from '../../algorithms/linkedList';
+import { Link, Redirect } from 'react-router-dom';
+import './dashboard.css';
 
 export class Dashboard extends React.Component {
     constructor(props) {
@@ -19,12 +20,6 @@ export class Dashboard extends React.Component {
     }
     setFilter(e) {
         console.log(e);
-    }
-    showCats() {
-        let animalButton = (<li><button onClick={e => this.setFilter(e)}>Animals</button></li>);
-        let foodButton = (<li><button>Food</button></li>);
-        let list = (<ul>{animalButton}{foodButton}</ul>)
-        return (list);
     }
 
     guessedWrong() {
@@ -79,11 +74,16 @@ export class Dashboard extends React.Component {
         })
     }
 
+    startLearning(e){
+        e.preventDefault();
+    }
+
     render() {
+        /*
         if (!this.linkedList.head) {
             this.initiateQuestionDatabase()
-            console.log('rendering linked list');
         }
+        */
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
                 Answer:
@@ -98,17 +98,33 @@ export class Dashboard extends React.Component {
             nextButton = (<button onClick={() => this.nextWord()}>Next</button>);
         }
         // let submitButton = ();
-        let guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
+        let guessField;
+        if(this.state.correct){
+            guessField = (<div><button onClick={() => this.nextWord()}>next</button></div>)
+        }
+        else{
+            guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
+        }
         return (
-            <div className="dashboard">
-                <div className="dashboard-username">
-                    Welcome: {this.props.username}
-                </div>
-                <div className="dashboard-protected-data">
-                    {/* Select a category: {this.showCats()} */}
-                    {guessField}
-                    {gotRight}
-                    {nextButton}
+            <div>
+                <h3 className="welcome">Welcome: {this.props.username}</h3>
+                <div className="dashboard">
+                    <Link to="/learning">
+                        <button className="topicButton" value="Animals" onClick={(e) => this.startLearning(e)}>Animals</button>
+                        <button className="topicButton" value="Animals Two" onClick={(e) => this.startLearning(e)}>Animals Two</button>
+
+                        <button className="topicButton" value="Food" onClick={(e) => this.startLearning(e)}>Food</button>
+                        <button className="topicButton" value="Places" onClick={(e) => this.startLearning(e)}>Places</button>
+
+                        <button className="topicButton" value="Phrases" onClick={(e) => this.startLearning(e)}>Phrases</button>
+                        <button className="topicButton" value="Locations" onClick={(e) => this.startLearning(e)}>Locations</button>
+
+                        <button className="topicButton" value="Directions" onClick={(e) => this.startLearning(e)}>Directions</button>
+                        <button className="topicButton" value="Destinations" onClick={(e) => this.startLearning(e)}>Destinations</button>
+                        
+                        <button className="topicButton" value="Descriptions" onClick={(e) => this.startLearning(e)}>Descriptions</button>
+                        <button className="topicButton" value="Technology" onClick={(e) => this.startLearning(e)}>Technology</button>
+                        </Link>
                 </div>
             </div>
         );
@@ -119,10 +135,12 @@ export class Dashboard extends React.Component {
 const mapStateToProps = state => {
     const { currentUser } = state.auth;
     return {
+        /*
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories
+        */
     };
 };
 
