@@ -5,7 +5,7 @@ import { fetchProtectedData } from '../../actions/protected-data';
 import LinkedList from '../../algorithms/linkedList';
 import './learning.css';
 
-export class Dashboard extends React.Component {
+export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,9 @@ export class Dashboard extends React.Component {
     }
     linkedList = new LinkedList();
     componentDidMount() {
-        this.props.dispatch(fetchProtectedData());
+        this.props.dispatch(fetchProtectedData(this.props.location.state.category));
+        console.log(this.props.location.state.category);
+
     }
     setFilter(e) {
         console.log(e);
@@ -74,11 +76,9 @@ export class Dashboard extends React.Component {
     }
 
     render() {
-        /*
         if (!this.linkedList.head) {
             this.initiateQuestionDatabase()
         }
-        */
         let entry = (<form onSubmit={e => this.submitAnswer(e)}>
             <label>
                 Answer:
@@ -88,25 +88,25 @@ export class Dashboard extends React.Component {
         </form>);
         let nextButton = '';
         let gotRight = '';
-        if(this.state.correct){
+        if (this.state.correct) {
             gotRight = (<p>You got it right!</p>);
             nextButton = (<button onClick={() => this.nextWord()}>Next</button>);
         }
         // let submitButton = ();
         let guessField;
-        if(this.state.correct){
+        if (this.state.correct) {
             guessField = (<div><button onClick={() => this.nextWord()}>next</button></div>)
         }
-        else{
+        else {
             guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
         }
         return (
             <div>
-                <h3 className="welcome">Welcome: {this.props.username}</h3>
-                <div className="dashboard">
-                    <div className="dashboard-username">
+                <h3 className="welcome">Welcome: {this.props.location.state.category}</h3>
+                <div className="Learning">
+                    <div className="Learning-username">
                     </div>
-                    <div className="dashboard-protected-data">
+                    <div className="Learning-protected-data">
                         {/* Select a category: {this.showCats()} */}
                         {guessField}
                     </div>
@@ -120,13 +120,13 @@ export class Dashboard extends React.Component {
 const mapStateToProps = state => {
     const { currentUser } = state.auth;
     return {
-        /*
+
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories
-        */
+
     };
 };
 
-export default requiresLogin()(connect(mapStateToProps)(Dashboard));
+export default requiresLogin()(connect(mapStateToProps)(Learning));

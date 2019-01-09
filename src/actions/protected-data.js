@@ -13,9 +13,10 @@ export const fetchProtectedDataError = error => ({
     error
 });
 
-export const fetchProtectedData = () => (dispatch, getState) => {
+export const fetchProtectedData = (category) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/question?category=animals`, {
+
+    return fetch(`${API_BASE_URL}/question?category=${category}`, {
         method: 'GET',
         headers: {
             // Provide our auth token as credentials
