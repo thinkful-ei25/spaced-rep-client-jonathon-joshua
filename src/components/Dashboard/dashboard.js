@@ -23,10 +23,10 @@ export class Dashboard extends React.Component {
         this.props.history.push({
             pathname: '/learning',
             state: {
-                category: e.target.value
+                category: e.target.value,
+                userId: this.props.userId
             }
         });
-        console.log(e.target.value);
     }
 
     render() {
@@ -62,7 +62,8 @@ const mapStateToProps = state => {
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
-        categories: state.protectedData.categories
+        userId: currentUser._id,
+        category: state.protectedData.category
     };
 };
 

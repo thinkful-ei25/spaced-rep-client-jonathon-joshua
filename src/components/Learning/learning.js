@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from '../requires-login';
-import { fetchProtectedData } from '../../actions/protected-data';
-import LinkedList from '../../algorithms/linkedList';
+import { fetchProtectedData, fetchHead } from '../../actions/protected-data';
 import './learning.css';
 
 export class Learning extends React.Component {
@@ -13,9 +12,9 @@ export class Learning extends React.Component {
             answered: null
         }
     }
-    linkedList = new LinkedList();
     componentDidMount() {
-        this.props.dispatch(fetchProtectedData(this.props.location.state.category));
+        this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
+        this.props.dispatch(fetchHead(this.props.userId))
     }
 
     submitAnswer(e) {
@@ -32,7 +31,6 @@ export class Learning extends React.Component {
                 word: pointsUpdate,
                 answered: "Correct"
             });
-            this.linkedList.push(this.state.word);
         } else {
             let pointsUpdate = Object.assign({}, this.state.word);
             let tempScore = pointsUpdate.score;
@@ -41,34 +39,15 @@ export class Learning extends React.Component {
                 word: pointsUpdate,
                 answered: "Wrong, Correct answer was " + this.state.word.esperantoAnswer
             });
-            this.linkedList.spacedRepitition(this.state.word, tempScore);
         }
     }
-
-    initiateQuestionDatabase() {
-        if (this.props.protectedData.length < 2) {
-            return;
-        }
-        for (let i = 0; i < this.props.protectedData.length; i++) {
-            this.linkedList.push(this.props.protectedData[i]);
-        }
-        this.setState({
-            word: this.linkedList.pop()
-        })
-    }
-
-    nextWord() {
-        this.setState({
-            word: this.linkedList.pop(),
-            answered: null
-        })
-    }
-
-
 
     render() {
-        if (!this.linkedList.head) {
-            this.initiateQuestionDatabase()
+        let category = this.props.location.state.category;
+        console.log(this.props.protectedData[category]);
+        // console.log(this.props.head['head']);
+        for(let keys in this.props.head){
+            console.log(keys);
         }
         let questionField;
         if (this.state.answered) {
@@ -108,7 +87,9 @@ const mapStateToProps = state => {
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
-        categories: state.protectedData.categories
+        categories: state.protectedData.categories,
+        userId: currentUser._id,
+        head: state.protectedData.head.questions
     };
 };
 
