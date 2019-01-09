@@ -23,6 +23,25 @@ export default class LinkedList {
     }
   }
 
+  spacedRepitition(data, movement){
+    if(this.head === null){
+      return 'how did you possibly mess this up';
+    }
+    let tempNode = this.head;
+    let nextNode;
+    let counter = 1;
+    while(tempNode.next){
+      if(counter === movement){
+        break;
+      }
+      tempNode = tempNode.next;
+      counter++;
+    }
+    data = new Node(data);
+    nextNode = tempNode.next;
+    tempNode.next = data;
+    data.next = nextNode;
+  }
   pop(){
     if(this.head === null){
       return '';

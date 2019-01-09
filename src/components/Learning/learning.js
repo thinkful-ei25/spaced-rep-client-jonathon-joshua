@@ -16,50 +16,37 @@ export class Learning extends React.Component {
     linkedList = new LinkedList();
     componentDidMount() {
         this.props.dispatch(fetchProtectedData(this.props.location.state.category));
-        console.log(this.props.location.state.category);
-
-    }
-    setFilter(e) {
-        console.log(e);
-    }
-
-    guessedWrong() {
-
-        console.log('Wrong');
-    }
-
-    guessedRight() {
-        console.log('Right');
     }
 
     submitAnswer(e) {
         e.preventDefault();
         if (this.input.value === this.state.word.esperantoAnswer) {
             let pointsUpdate = Object.assign({}, this.state.word);
-            pointsUpdate.score = 1;
+            pointsUpdate.score = pointsUpdate.score * 2;
             this.setState({
                 word: pointsUpdate,
                 answered: "Correct"
             });
+            this.linkedList.push(this.state.word);
         } else {
             let pointsUpdate = Object.assign({}, this.state.word);
-            pointsUpdate.score = pointsUpdate.score * 2;
+            let tempScore = pointsUpdate.score;
+            pointsUpdate.score = 1;
             this.setState({
                 word: pointsUpdate,
                 answered: "Wrong, Correct answer was " + this.state.word.esperantoAnswer
             });
+            this.linkedList.spacedRepitition(this.state.word, tempScore);
         }
+        console.log(this.linkedList.print());
     }
 
     initiateQuestionDatabase() {
         if (this.props.protectedData.length < 2) {
-            console.log('returning');
             return;
         }
-        console.log(this.props.protectedData.length);
         for (let i = 0; i < this.props.protectedData.length; i++) {
             this.linkedList.push(this.props.protectedData[i]);
-            console.log('pushed ' + this.props.protectedData[i])
         }
         this.setState({
             word: this.linkedList.pop()
@@ -67,7 +54,6 @@ export class Learning extends React.Component {
     }
 
     nextWord() {
-        this.linkedList.push(this.state.word);
         this.setState({
             word: this.linkedList.pop(),
             answered: null
