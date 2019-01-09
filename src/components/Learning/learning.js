@@ -10,7 +10,7 @@ export class Learning extends React.Component {
         super(props);
         this.state = {
             word: undefined,
-            correct: false
+            answered: null
         }
     }
     linkedList = new LinkedList();
@@ -35,21 +35,19 @@ export class Learning extends React.Component {
     submitAnswer(e) {
         e.preventDefault();
         if (this.input.value === this.state.word.esperantoAnswer) {
-            let anything = Object.assign({}, this.state.word);
-            anything.score = 1;
+            let pointsUpdate = Object.assign({}, this.state.word);
+            pointsUpdate.score = 1;
             this.setState({
-                word: anything,
-                correct: true
+                word: pointsUpdate,
+                answered: "Correct"
             });
-            console.log(anything);
         } else {
-            let anything = Object.assign({}, this.state.word);
-            anything.score = anything.score * 2;
+            let pointsUpdate = Object.assign({}, this.state.word);
+            pointsUpdate.score = pointsUpdate.score * 2;
             this.setState({
-                word: anything,
-                correct: false
+                word: pointsUpdate,
+                answered: "Wrong, Correct answer was " + this.state.word.esperantoAnswer
             });
-            console.log(anything);
         }
     }
 
@@ -71,47 +69,41 @@ export class Learning extends React.Component {
     nextWord() {
         this.linkedList.push(this.state.word);
         this.setState({
-            word: this.linkedList.pop()
+            word: this.linkedList.pop(),
+            answered: null
         })
     }
+
+
 
     render() {
         if (!this.linkedList.head) {
             this.initiateQuestionDatabase()
         }
-        let entry = (<form onSubmit={e => this.submitAnswer(e)}>
-            <label>
-                Answer:
-              <input type="text" name="name" ref={node => (this.input = node)} />
-            </label>
-            <input type="submit" value="Submit" />
-        </form>);
-        let nextButton = '';
-        let gotRight = '';
-        if (this.state.correct) {
-            gotRight = (<p>You got it right!</p>);
-            nextButton = (<button onClick={() => this.nextWord()}>Next</button>);
-        }
-        // let submitButton = ();
-        let guessField;
-        if (this.state.correct) {
-            guessField = (<div><button onClick={() => this.nextWord()}>next</button></div>)
+        let questionField;
+        if (this.state.answered) {
+            questionField = (<h3>{this.state.answered}</h3>)
         }
         else {
-            guessField = (<div >{this.state.word ? this.state.word.esperantoWord : ''}{entry}</div>);
+            questionField = (<h3>{this.state.word ? this.state.word.esperantoWord : ''}</h3>);
         }
+        let buttonField;
+        this.state.answered ? buttonField = (<button className="questionButton" onClick={e => this.nextWord(e)}>next</button>) : buttonField = (<button className="questionButton" onClick={e => this.submitAnswer(e)}>Submit</button>);
+
         return (
             <div>
-                <h3 className="welcome">Welcome: {this.props.location.state.category}</h3>
-                <div className="Learning">
-                    <div className="Learning-username">
+                <h3 className="welcome">{this.props.location.state.category}</h3>
+                <div className="dashboard">
+                    <div className="question">
+                        {questionField}
                     </div>
-                    <div className="Learning-protected-data">
-                        {/* Select a category: {this.showCats()} */}
-                        {guessField}
-                    </div>
+                    <label>
+                        <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
+                    </label>
+                    {buttonField}
                 </div>
             </div>
+
         );
     }
 }
@@ -120,12 +112,10 @@ export class Learning extends React.Component {
 const mapStateToProps = state => {
     const { currentUser } = state.auth;
     return {
-
         username: state.auth.currentUser.username,
         name: `${currentUser.firstName} ${currentUser.lastName}`,
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories
-
     };
 };
 
