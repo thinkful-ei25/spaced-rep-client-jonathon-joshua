@@ -20,6 +20,11 @@ export class Learning extends React.Component {
 
     submitAnswer(e) {
         e.preventDefault();
+        console.log('clicked');
+        if(this.state.answered){
+            this.nextWord();
+            return;
+        }
         if (this.input.value === this.state.word.esperantoAnswer) {
             let pointsUpdate = Object.assign({}, this.state.word);
             pointsUpdate.score = pointsUpdate.score * 2;
@@ -38,7 +43,6 @@ export class Learning extends React.Component {
             });
             this.linkedList.spacedRepitition(this.state.word, tempScore);
         }
-        console.log(this.linkedList.print());
     }
 
     initiateQuestionDatabase() {
@@ -74,7 +78,7 @@ export class Learning extends React.Component {
             questionField = (<h3>{this.state.word ? this.state.word.esperantoWord : ''}</h3>);
         }
         let buttonField;
-        this.state.answered ? buttonField = (<button className="questionButton" onClick={e => this.nextWord(e)}>next</button>) : buttonField = (<button className="questionButton" onClick={e => this.submitAnswer(e)}>Submit</button>);
+        this.state.answered ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
 
         return (
             <div>
@@ -83,10 +87,13 @@ export class Learning extends React.Component {
                     <div className="question">
                         {questionField}
                     </div>
-                    <label>
-                        <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
-                    </label>
-                    {buttonField}
+                    <form onSubmit={e => this.submitAnswer(e)}>
+                        <label>
+                            <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
+                            {buttonField}
+                        </label>
+                        
+                    </form>
                 </div>
             </div>
 
