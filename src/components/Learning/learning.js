@@ -9,7 +9,8 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: null
+            question: null,
+            answered: null
         }
     }
     async componentDidMount() {
@@ -20,33 +21,26 @@ export class Learning extends React.Component {
     }
 
 
-    nextWord(category) {
-        let newHead = Object.assign({}, this.state.head);
-        newHead[category] += 1;
+    nextWord() {
+
         this.setState({
-            head: newHead,
+            head: null,
             answered: null
         })
     }
     submitAnswer(e) {
         e.preventDefault();
-        let category = this.props.location.state.category;
         if (this.state.answered) {
-            this.nextWord(category);
+            this.nextWord();
             return;
         }
-        let arrayElement = this.state.array[category][this.state.head[category]];
-        let tempObject = this.state.head[category];
-        console.log(tempObject);
-        console.log(arrayElement);
-        if (this.input.value === arrayElement.esperantoAnswer) {
-            arrayElement.score *= 2;
+        if (this.input.value === this.state.question.esperantoAnswer) {
             this.setState({
                 answered: "Correct"
             });
         } else {
             this.setState({
-                answered: "Wrong, Correct answer was " + arrayElement.esperantoAnswer
+                answered: "Wrong, Correct answer was " 
             });
         }
     }
