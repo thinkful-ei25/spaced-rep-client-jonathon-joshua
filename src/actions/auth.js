@@ -81,10 +81,7 @@ export const login = (username, password) => dispatch => {
 };
 
 export const logOut = () => (dispatch, getState) => {
-    dispatch(authRequest());
-
-    const authToken = getState().auth.authToken;
-    clearAuthToken(authToken);
+    dispatch(clearAuth());
 };
 
 export const refreshAuthToken = () => (dispatch, getState) => {

@@ -51,15 +51,8 @@ export class Learning extends React.Component {
         }
     }
 
-    async logOut(e) {
-        await this.props.dispatch(logOut())
-
-        this.props.history.push({
-            pathname: '/'
-        });
-
-
-
+    logOut(e) {
+        this.props.dispatch(logOut())
     }
 
     render() {
