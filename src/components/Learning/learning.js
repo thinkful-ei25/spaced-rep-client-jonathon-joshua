@@ -8,57 +8,70 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            word: undefined,
+            array: null,
+            head: null,
             answered: null
         }
     }
-    componentDidMount() {
-        this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
-        this.props.dispatch(fetchHead(this.props.userId))
+    async componentDidMount() {
+        await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
+        await this.props.dispatch(fetchHead(this.props.userId));
+        this.setState({
+            array: this.props.protectedData,
+            head: this.props.head,
+        })
     }
 
+
+    nextWord(category){
+        let newHead = Object.assign({}, this.state.head);
+        newHead[category] += 1;
+        this.setState({
+            head: newHead,
+            answered: null
+        })
+    }
     submitAnswer(e) {
         e.preventDefault();
+        let category = this.props.location.state.category;
         console.log('clicked');
         if(this.state.answered){
-            this.nextWord();
+            this.nextWord(category);
             return;
         }
-        if (this.input.value === this.state.word.esperantoAnswer) {
-            let pointsUpdate = Object.assign({}, this.state.word);
-            pointsUpdate.score = pointsUpdate.score * 2;
+        if (this.input.value === this.state.array[category][this.state.head[category]].esperantoAnswer) {
             this.setState({
-                word: pointsUpdate,
                 answered: "Correct"
             });
         } else {
-            let pointsUpdate = Object.assign({}, this.state.word);
-            let tempScore = pointsUpdate.score;
-            pointsUpdate.score = 1;
             this.setState({
-                word: pointsUpdate,
-                answered: "Wrong, Correct answer was " + this.state.word.esperantoAnswer
+                answered: "Wrong, Correct answer was " + this.state.array[category][this.state.head[category]].esperantoAnswer
             });
         }
     }
 
     render() {
         let category = this.props.location.state.category;
-        console.log(this.props.protectedData[category]);
-        console.log(this.props.head);
+        let word, answer, position;
+        if(this.state.array && this.state.head){
+            position = this.state.head[category];
+            word = this.state.array[category][position].esperantoWord;
+            answer = this.state.array[category][position].esperantoAnswer;
+        }
         let questionField;
+
         if (this.state.answered) {
             questionField = (<h3>{this.state.answered}</h3>)
         }
         else {
-            questionField = (<h3>{this.state.word ? this.state.word.esperantoWord : ''}</h3>);
+            questionField = (<h3>{word}</h3>);
         }
         let buttonField;
         this.state.answered ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
 
         return (
             <div>
-                <h3 className="welcome">{this.props.location.state.category}</h3>
+                <h3 className="welcome">{category}</h3>
                 <div className="dashboard">
                     <div className="question">
                         {questionField}
@@ -68,7 +81,6 @@ export class Learning extends React.Component {
                             <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
                             {buttonField}
                         </label>
-                        
                     </form>
                 </div>
             </div>

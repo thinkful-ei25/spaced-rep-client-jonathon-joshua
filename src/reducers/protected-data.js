@@ -6,14 +6,8 @@ import {
 
 const initialState = {
     filterTerm: '',
-    data: [
-        {
-        }],
-    head: [
-        {
-            
-        }
-    ],
+    data: null,
+    head: null,
     error: null
 };
 

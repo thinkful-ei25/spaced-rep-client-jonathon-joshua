@@ -16,7 +16,6 @@ export class Dashboard extends React.Component {
     }
     linkedList = new LinkedList();
     componentDidMount() {
-        this.props.dispatch(fetchProtectedData());
     }
     
     startLearning(e) {
