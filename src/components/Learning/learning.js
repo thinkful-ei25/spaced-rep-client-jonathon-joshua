@@ -31,10 +31,21 @@ export class Learning extends React.Component {
     submitAnswer(e) {
         e.preventDefault();
         if (this.state.answered) {
+<<<<<<< HEAD
             this.nextWord();
             return;
         }
         if (this.input.value === this.state.question.esperantoAnswer) {
+=======
+            this.setState({
+                answered: null
+            })
+            return;
+        }
+
+        if (this.input.value === arrayElement.esperantoAnswer) {
+            arrayElement.score *= 2;
+>>>>>>> f3cb4779f024f861ad1756f2917147ef2bd109c2
             this.setState({
                 answered: "Correct"
             });

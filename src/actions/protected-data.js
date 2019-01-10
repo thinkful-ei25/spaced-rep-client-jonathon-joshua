@@ -37,6 +37,16 @@ export const fetchHead = (userId) => (dispatch, getState) => {
     });
 }
 
+export const updateDatabase = (userId, data) => (dispatch, getState) => {
+    const authToken = getState().auth.authToken;
+    return fetch(`${API_BASE_URL}/question/${userId}?category=${category}`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${authToken}`
+        }
+    });
+}
+
 export const fetchProtectedData = (userId, category) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
 
