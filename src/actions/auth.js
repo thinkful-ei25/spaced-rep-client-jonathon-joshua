@@ -33,6 +33,8 @@ export const authError = error => ({
     error
 });
 
+
+
 // Stores the auth token in state and localStorage, and decodes and stores
 // the user data stored in the token
 const storeAuthInfo = (authToken, dispatch) => {
@@ -76,6 +78,13 @@ export const login = (username, password) => dispatch => {
                 );
             })
     );
+};
+
+export const logOut = () => (dispatch, getState) => {
+    dispatch(authRequest());
+
+    const authToken = getState().auth.authToken;
+    clearAuthToken(authToken);
 };
 
 export const refreshAuthToken = () => (dispatch, getState) => {

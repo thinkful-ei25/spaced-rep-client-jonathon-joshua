@@ -19,6 +19,7 @@ export const fetchProtectedDataError = error => ({
     error
 });
 
+
 export const FETCH_HEAD = 'FETCH_HEAD';
 export const fetchHead = (userId) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;

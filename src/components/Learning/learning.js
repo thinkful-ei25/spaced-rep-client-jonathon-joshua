@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from '../requires-login';
 import { fetchProtectedData, fetchHead } from '../../actions/protected-data';
+import { logOut } from '../../actions/auth';
 import './learning.css';
 
 export class Learning extends React.Component {
@@ -23,7 +24,7 @@ export class Learning extends React.Component {
     }
 
 
-    nextWord(category){
+    nextWord(category) {
         let newHead = Object.assign({}, this.state.head);
         newHead[category] += 1;
         this.setState({
@@ -35,7 +36,7 @@ export class Learning extends React.Component {
         e.preventDefault();
         let category = this.props.location.state.category;
         console.log('clicked');
-        if(this.state.answered){
+        if (this.state.answered) {
             this.nextWord(category);
             return;
         }
@@ -50,10 +51,23 @@ export class Learning extends React.Component {
         }
     }
 
+    async logOut(e) {
+        await this.props.dispatch(logOut())
+
+        this.props.history.push({
+            pathname: '/'
+        });
+
+
+
+    }
+
     render() {
+        console.log(this.props)
         let category = this.props.location.state.category;
         let word, answer, position;
-        if(this.state.array && this.state.head){
+        let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
+        if (this.state.array && this.state.head) {
             position = this.state.head[category];
             word = this.state.array[category][position].esperantoWord;
             answer = this.state.array[category][position].esperantoAnswer;
@@ -83,6 +97,7 @@ export class Learning extends React.Component {
                         </label>
                     </form>
                 </div>
+                {logoutButton}
             </div>
 
         );
@@ -98,7 +113,8 @@ const mapStateToProps = state => {
         protectedData: state.protectedData.data,
         categories: state.protectedData.categories,
         userId: currentUser._id,
-        head: state.protectedData.head
+        head: state.protectedData.head,
+        token: state.auth
     };
 };
 
