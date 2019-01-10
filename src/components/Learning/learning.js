@@ -30,15 +30,13 @@ export class Learning extends React.Component {
     }
     submitAnswer(e) {
         e.preventDefault();
-        let category = this.props.location.state.category;
         if (this.state.answered) {
-            this.nextWord(category);
+            this.setState({
+                answered: null
+            })
             return;
         }
-        let arrayElement = this.state.array[category][this.state.head[category]];
-        let tempObject = this.state.head[category];
-        console.log(tempObject);
-        console.log(arrayElement);
+
         if (this.input.value === arrayElement.esperantoAnswer) {
             arrayElement.score *= 2;
             this.setState({
