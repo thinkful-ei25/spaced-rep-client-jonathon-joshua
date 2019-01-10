@@ -48,8 +48,10 @@ export const fetchProtectedData = (userId, category) => (dispatch, getState) => 
         }
     })
         .then(res => normalizeResponseErrors(res))
+        .then(res => console.log(res))
         .then(res => res.json())
-        .then(({questions}) => dispatch(fetchProtectedDataSuccess(questions)))
+        .then(question => console.log(question))
+        .then(({question}) => dispatch(fetchProtectedDataSuccess(question)))
         .catch(err => {
             dispatch(fetchProtectedDataError(err));
         });

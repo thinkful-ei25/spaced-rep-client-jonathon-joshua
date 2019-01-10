@@ -9,17 +9,13 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            array: null,
-            head: null,
-            answered: null
+            question: null,
         }
     }
     async componentDidMount() {
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
-        await this.props.dispatch(fetchHead(this.props.userId));
         this.setState({
-            array: this.props.protectedData,
-            head: this.props.head,
+            question: this.props.protectedData
         })
     }
 
@@ -35,50 +31,45 @@ export class Learning extends React.Component {
     submitAnswer(e) {
         e.preventDefault();
         let category = this.props.location.state.category;
-        console.log('clicked');
         if (this.state.answered) {
             this.nextWord(category);
             return;
         }
-        if (this.input.value === this.state.array[category][this.state.head[category]].esperantoAnswer) {
+        let arrayElement = this.state.array[category][this.state.head[category]];
+        if (this.input.value === arrayElement.esperantoAnswer) {
+            arrayElement.score *= 2;
             this.setState({
                 answered: "Correct"
             });
         } else {
             this.setState({
-                answered: "Wrong, Correct answer was " + this.state.array[category][this.state.head[category]].esperantoAnswer
+                answered: "Wrong, Correct answer was " + arrayElement.esperantoAnswer
             });
         }
     }
 
     logOut(e) {
+
         this.props.dispatch(logOut())
     }
 
     render() {
-        console.log(this.props)
-        let category = this.props.location.state.category;
-        let word, answer, position;
+        console.log(this.state.question)
+        console.log(this.props.protectedData);
         let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
-        if (this.state.array && this.state.head) {
-            position = this.state.head[category];
-            word = this.state.array[category][position].esperantoWord;
-            answer = this.state.array[category][position].esperantoAnswer;
-        }
         let questionField;
-
         if (this.state.answered) {
             questionField = (<h3>{this.state.answered}</h3>)
         }
         else {
-            questionField = (<h3>{word}</h3>);
+            questionField = (<h3>test</h3>);
         }
         let buttonField;
         this.state.answered ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
 
         return (
             <div>
-                <h3 className="welcome">{category}</h3>
+                <h3 className="welcome">test</h3>
                 <div className="dashboard">
                     <div className="question">
                         {questionField}
