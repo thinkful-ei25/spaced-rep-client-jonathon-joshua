@@ -9,7 +9,7 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: null,
+            question: null
         }
     }
     async componentDidMount() {
@@ -36,6 +36,9 @@ export class Learning extends React.Component {
             return;
         }
         let arrayElement = this.state.array[category][this.state.head[category]];
+        let tempObject = this.state.head[category];
+        console.log(tempObject);
+        console.log(arrayElement);
         if (this.input.value === arrayElement.esperantoAnswer) {
             arrayElement.score *= 2;
             this.setState({
@@ -54,22 +57,25 @@ export class Learning extends React.Component {
     }
 
     render() {
-        console.log(this.state.question)
-        console.log(this.props.protectedData);
         let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
         let questionField;
+        let word = '';
+        if(this.state.question){
+            word = this.state.question.esperantoWord;
+        }
+
         if (this.state.answered) {
             questionField = (<h3>{this.state.answered}</h3>)
         }
         else {
-            questionField = (<h3>test</h3>);
+            questionField = (<h3>{word}</h3>);
         }
         let buttonField;
         this.state.answered ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
 
         return (
             <div>
-                <h3 className="welcome">test</h3>
+                <h3 className="welcome">{this.props.location.state.category}</h3>
                 <div className="dashboard">
                     <div className="question">
                         {questionField}
