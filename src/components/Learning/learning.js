@@ -9,35 +9,27 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: null,
             answered: null
         }
     }
     async componentDidMount() {
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
-        this.setState({
-            question: this.props.protectedData
-        })
     }
 
-    async getNextQuestion(){
-        await this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.state.question,  this.state.answered));
-        await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
-        this.setState({
-            question: this.props.protectedData
-        })
+    getNextQuestion(answered){
+        this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.props.protectedData,  answered));
     }
 
     submitAnswer(e) {
         e.preventDefault();
+        this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         if (this.state.answered !== null) {
-            console.log('calling update');
             this.setState({
                 answered: null,
             })
             return;
         }
-        if (this.input.value === this.state.question.esperantoAnswer) {
+        if (this.input.value === this.props.protectedData.esperantoAnswer) {
             this.setState({
                 answered: true
             });
@@ -46,7 +38,7 @@ export class Learning extends React.Component {
                 answered: false
             });
         }
-        this.getNextQuestion();
+        this.getNextQuestion(this.input.value === this.props.protectedData.esperantoAnswer);
     }
 
     logOut(e) {
@@ -55,14 +47,14 @@ export class Learning extends React.Component {
     }
 
     render() {
-        if(this.state.question){
-            word = this.state.question.esperantoWord;
+        if(this.props.protectedData){
+            word = this.props.protectedData.esperantoWord;
         }
         let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
         let questionField;
         let word = '';
-        if(this.state.question){
-            word = this.state.question.esperantoWord;
+        if(this.props.protectedData){
+            word = this.props.protectedData.esperantoWord;
         }
 
         if (this.state.answered !== null) {

@@ -64,8 +64,8 @@ export const updateDatabase = (userId, category, data, answer) => (dispatch, get
             id: data._id,
             answer: answer
         })
-    }).then((response) => console.log(response))
-    .catch(console.log('shit happened'))
+    }).then(result => console.log(result))
+    .catch(console.log('bad stuff happened'))
 }
 
 export const fetchProtectedData = (userId, category) => (dispatch, getState) => {
