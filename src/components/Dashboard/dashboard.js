@@ -35,12 +35,12 @@ export class Dashboard extends React.Component {
                 <h3 className="welcome">Welcome: {this.props.username}</h3>
                 <div className="dashboard">
                     <button className="topicButton" value="animals" onClick={(e) => this.startLearning(e)}>Animals</button>
-                    <button disabled={true} className="topicButton" value="Animals Two" onClick={(e) => this.startLearning(e)}>Animals Two</button>
+                    <button className="topicButton" value="animalsTwo" onClick={(e) => this.startLearning(e)}>Animals Two</button>
 
-                    <button disabled={true} className="topicButton" value="Food" onClick={(e) => this.startLearning(e)}>Food</button>
-                    <button disabled={true} className="topicButton" value="Places" onClick={(e) => this.startLearning(e)}>Places</button>
+                    <button className="topicButton" value="food" onClick={(e) => this.startLearning(e)}>Food</button>
+                    <button className="topicButton" value="places" onClick={(e) => this.startLearning(e)}>Places</button>
 
-                    <button disabled={true} className="topicButton" value="Phrases" onClick={(e) => this.startLearning(e)}>Phrases</button>
+                    <button className="topicButton" value="phrases" onClick={(e) => this.startLearning(e)}>Phrases</button>
                     <button disabled={true} className="topicButton" value="Locations" onClick={(e) => this.startLearning(e)}>Locations</button>
 
                     <button disabled={true} className="topicButton" value="Directions" onClick={(e) => this.startLearning(e)}>Directions</button>
