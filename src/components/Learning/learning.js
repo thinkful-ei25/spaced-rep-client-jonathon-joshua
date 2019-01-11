@@ -11,9 +11,12 @@ export class Learning extends React.Component {
         super(props);
         this.state = {
             question: null,
-            answered: null
+            answered: null,
+            guesses: 0,
+            right: 0
         }
     }
+
     async componentDidMount() {
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         this.setState({
@@ -30,7 +33,7 @@ export class Learning extends React.Component {
     }
 
     calculateScore() {
-        return "score";
+        return (`score: ${this.state.right}/${this.state.guesses}`);
     }
     submitAnswer(e) {
         e.preventDefault();
@@ -72,12 +75,12 @@ export class Learning extends React.Component {
             questionField = (<h3>{this.state.answered ? 'Correct!' : 'Wrong'}</h3>)
         }
         else {
-            questionField = (<h3>{word}</h3>);
+            questionField = (<h3 className="questionWord">{word}</h3>);
         }
         let buttonField;
         this.state.answered !== null ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
         const welcomeField = (<div className="learningGreet">You are Learning: {this.props.location.state.category}</div>);
-        const score = (this.calculateScore());
+        const score = (<h2 className="score">{this.calculateScore()}</h2>);
         const answer = (<form onSubmit={e => this.submitAnswer(e)}>
 
             <label>
@@ -85,9 +88,9 @@ export class Learning extends React.Component {
                 {buttonField}
             </label>
         </form>);
-        let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
+        let logoutButton = (<button className="logout" onClick={e => this.logOut(e)}>Logout</button>);
 
-        const learningField = (<div className="questionArea"> {score}{questionField}{answer})</div>);
+        const learningField = (<div className="questionArea"> {score}{questionField}{answer}</div>);
         return (
             <main className="training">
                 {welcomeField}
