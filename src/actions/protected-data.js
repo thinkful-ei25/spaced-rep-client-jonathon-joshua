@@ -13,6 +13,13 @@ export const fetchHeadSuccess = head => ({
     head
 })
 
+export const UPDATE_DATABASE_SUCCESS = 'UPDATE_DATABASE_SUCCESS';
+export const updateDatabaseSuccess = head => ({
+    type: UPDATE_DATABASE_SUCCESS,
+    head
+})
+
+
 export const FETCH_PROTECTED_DATA_ERROR = 'FETCH_PROTECTED_DATA_ERROR';
 export const fetchProtectedDataError = error => ({
     type: FETCH_PROTECTED_DATA_ERROR,
@@ -37,19 +44,33 @@ export const fetchHead = (userId) => (dispatch, getState) => {
     });
 }
 
-export const updateDatabase = (userId, data) => (dispatch, getState) => {
+export const updateDatabase = (userId, category, data, answer) => (dispatch, getState) => {
+    console.log('updateDatabase');
     const authToken = getState().auth.authToken;
+    const body = {
+        id: data._id,
+        answer: answer
+    }
+    console.log(body);
+    console.log(userId);
+    console.log(category);
     return fetch(`${API_BASE_URL}/question/${userId}?category=${category}`, {
         method: 'PUT',
         headers: {
-            Authorization: `Bearer ${authToken}`
-        }
-    });
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: data._id,
+            answer: answer
+        })
+    }).then((response) => console.log(response))
+    .catch(console.log('shit happened'))
 }
 
 export const fetchProtectedData = (userId, category) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
-
+    console.log('fetching data');
     return fetch(`${API_BASE_URL}/question/${userId}?category=${category}`, {
         method: 'GET',
         headers: {

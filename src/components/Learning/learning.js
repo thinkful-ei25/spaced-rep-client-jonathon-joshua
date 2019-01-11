@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import requiresLogin from '../requires-login';
-import { fetchProtectedData, fetchHead } from '../../actions/protected-data';
+import { fetchProtectedData, updateDatabase } from '../../actions/protected-data';
 import { logOut } from '../../actions/auth';
 import './learning.css';
 
@@ -20,40 +20,33 @@ export class Learning extends React.Component {
         })
     }
 
-
-    nextWord() {
-
+    async getNextQuestion(){
+        await this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.state.question,  this.state.answered));
+        await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         this.setState({
-            head: null,
-            answered: null
+            question: this.props.protectedData
         })
     }
+
     submitAnswer(e) {
         e.preventDefault();
-        if (this.state.answered) {
-<<<<<<< HEAD
-            this.nextWord();
-            return;
-        }
-        if (this.input.value === this.state.question.esperantoAnswer) {
-=======
+        if (this.state.answered !== null) {
+            console.log('calling update');
             this.setState({
-                answered: null
+                answered: null,
             })
             return;
         }
-
-        if (this.input.value === arrayElement.esperantoAnswer) {
-            arrayElement.score *= 2;
->>>>>>> f3cb4779f024f861ad1756f2917147ef2bd109c2
+        if (this.input.value === this.state.question.esperantoAnswer) {
             this.setState({
-                answered: "Correct"
+                answered: true
             });
         } else {
             this.setState({
-                answered: "Wrong, Correct answer was " 
+                answered: false
             });
         }
+        this.getNextQuestion();
     }
 
     logOut(e) {
@@ -62,6 +55,9 @@ export class Learning extends React.Component {
     }
 
     render() {
+        if(this.state.question){
+            word = this.state.question.esperantoWord;
+        }
         let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
         let questionField;
         let word = '';
@@ -69,14 +65,14 @@ export class Learning extends React.Component {
             word = this.state.question.esperantoWord;
         }
 
-        if (this.state.answered) {
-            questionField = (<h3>{this.state.answered}</h3>)
+        if (this.state.answered !== null) {
+            questionField = (<h3>{this.state.answered ? 'Correct!' : 'Wrong'}</h3>)
         }
         else {
             questionField = (<h3>{word}</h3>);
         }
         let buttonField;
-        this.state.answered ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
+        this.state.answered !== null ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
 
         return (
             <div>

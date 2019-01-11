@@ -1,7 +1,8 @@
 import {
     FETCH_PROTECTED_DATA_SUCCESS,
     FETCH_PROTECTED_DATA_ERROR,
-    FETCH_HEAD_SUCCESS
+    FETCH_HEAD_SUCCESS,
+    UPDATE_DATABASE_SUCCESS,
 } from '../actions/protected-data';
 
 const initialState = {
@@ -27,6 +28,11 @@ export default function reducer(state = initialState, action) {
         return Object.assign({}, state, {
             error: action.error
         });
+    } else if (action.type === UPDATE_DATABASE_SUCCESS){
+        return Object.assign({}, state, {
+            error: null
+        });
     } 
+    
     return state;
 }
