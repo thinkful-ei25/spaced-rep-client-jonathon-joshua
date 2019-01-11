@@ -17,7 +17,7 @@ export class Dashboard extends React.Component {
     linkedList = new LinkedList();
     componentDidMount() {
     }
-    
+
     startLearning(e) {
         this.props.history.push({
             pathname: '/learning',
@@ -28,28 +28,41 @@ export class Dashboard extends React.Component {
         });
     }
 
+
     render() {
-        // let submitButton = ();
+        const welcomeBanner = (<div className="hello"><h3>Welcome: {this.props.username}</h3>
+        <h2>Select a Category to Learn!</h2></div>)
+        const animals = (<button className="topicButton" value="animals"
+            onClick={(e) => this.startLearning(e)}>Animals</button>
+        );
+        const animalsTwo = (<button className="topicButton" value="animalsTwo"
+            onClick={(e) => this.startLearning(e)}>Animals Two</button>
+        );
+        const food = (<button className="topicButton" value="food"
+            onClick={(e) => this.startLearning(e)}>Food</button>
+        );
+        const places = (<button className="topicButton" value="places"
+            onClick={(e) => this.startLearning(e)}>Places</button>
+        );
+        const technology = (<button className="topicButton" value="technology"
+            onClick={(e) => this.startLearning(e)}>Technology</button>
+        );
+        const locations = (<button className="topicButton" value="locations"
+            onClick={(e) => this.startLearning(e)}>Locations</button>
+        );
+        const directions = (<button className="topicButton" value="directions"
+            onClick={(e) => this.startLearning(e)}>Directions</button>
+        );
+        const phrases = (<button className="topicButton" value="phrases"
+            onClick={(e) => this.startLearning(e)}>Phrases</button>
+        );
+        const dash = (<div className="selector">{animals}{animalsTwo}{food}{places}
+            {technology}{locations}{directions}{phrases}</div>)
         return (
-            <div>
-                <h3 className="welcome">Welcome: {this.props.username}</h3>
-                <div className="dashboard">
-                    <button className="topicButton" value="animals" onClick={(e) => this.startLearning(e)}>Animals</button>
-                    <button disabled={true} className="topicButton" value="Animals Two" onClick={(e) => this.startLearning(e)}>Animals Two</button>
-
-                    <button disabled={true} className="topicButton" value="Food" onClick={(e) => this.startLearning(e)}>Food</button>
-                    <button disabled={true} className="topicButton" value="Places" onClick={(e) => this.startLearning(e)}>Places</button>
-
-                    <button disabled={true} className="topicButton" value="Phrases" onClick={(e) => this.startLearning(e)}>Phrases</button>
-                    <button disabled={true} className="topicButton" value="Locations" onClick={(e) => this.startLearning(e)}>Locations</button>
-
-                    <button disabled={true} className="topicButton" value="Directions" onClick={(e) => this.startLearning(e)}>Directions</button>
-                    <button disabled={true} className="topicButton" value="Destinations" onClick={(e) => this.startLearning(e)}>Destinations</button>
-
-                    <button disabled={true} className="topicButton" value="Descriptions" onClick={(e) => this.startLearning(e)}>Descriptions</button>
-                    <button disabled={true} className="topicButton" value="Technology" onClick={(e) => this.startLearning(e)}>Technology</button>
-                </div>
-            </div>
+            <main className="mainDashboard">
+                {welcomeBanner}
+                {dash}
+            </main>
         );
     }
 }

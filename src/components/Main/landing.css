@@ -1,0 +1,48 @@
+
+
+.splash-page{
+    display: inline-block;
+    min-height: 94.4vh;
+    min-width: 100%;
+    background: url('/images/splash.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;;
+  }
+  
+  .greetBox{
+    width: 75%;
+    margin: auto;
+    margin-top: 5%;
+    text-align: center;
+    box-shadow: inset 6px 7px 5px 3000px rgba(17, 17, 17, 0.377);
+  }
+  
+  .greeting{
+    width: 75%;
+    margin: auto;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    color: white;
+  }
+  
+  .greeting h1{
+    font-size: 40px;
+  }
+  
+  .greeting h2{
+    margin-top: 2%;
+    font-size: 20px;
+  }
+  
+  .greeting p {
+    margin-top: 2%;
+    font-size: 15px;
+  }
+  
+  
+  .register{
+    padding-bottom: 2%;
+  }
+  

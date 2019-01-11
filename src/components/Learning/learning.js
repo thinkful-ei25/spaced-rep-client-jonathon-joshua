@@ -5,13 +5,18 @@ import { fetchProtectedData, updateDatabase } from '../../actions/protected-data
 import { logOut } from '../../actions/auth';
 import './learning.css';
 
+
 export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            answered: null
+            question: null,
+            answered: null,
+            guesses: 0,
+            right: 0
         }
     }
+
     async componentDidMount() {
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
     }
@@ -20,6 +25,9 @@ export class Learning extends React.Component {
         this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.props.protectedData,  answered));
     }
 
+    calculateScore() {
+        return (`score: ${this.state.right}/${this.state.guesses}`);
+    }
     submitAnswer(e) {
         e.preventDefault();
         this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
@@ -50,7 +58,6 @@ export class Learning extends React.Component {
         if(this.props.protectedData){
             word = this.props.protectedData.esperantoWord;
         }
-        let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
         let questionField;
         let word = '';
         if(this.props.protectedData){
@@ -61,27 +68,28 @@ export class Learning extends React.Component {
             questionField = (<h3>{this.state.answered ? 'Correct!' : 'Wrong'}</h3>)
         }
         else {
-            questionField = (<h3>{word}</h3>);
+            questionField = (<h3 className="questionWord">{word}</h3>);
         }
         let buttonField;
         this.state.answered !== null ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
+        const welcomeField = (<div className="learningGreet">You are Learning: {this.props.location.state.category}</div>);
+        const score = (<h2 className="score">{this.calculateScore()}</h2>);
+        const answer = (<form onSubmit={e => this.submitAnswer(e)}>
 
+            <label>
+                <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
+                {buttonField}
+            </label>
+        </form>);
+        let logoutButton = (<button className="logout" onClick={e => this.logOut(e)}>Logout</button>);
+
+        const learningField = (<div className="questionArea"> {score}{questionField}{answer}</div>);
         return (
-            <div>
-                <h3 className="welcome">{this.props.location.state.category}</h3>
-                <div className="dashboard">
-                    <div className="question">
-                        {questionField}
-                    </div>
-                    <form onSubmit={e => this.submitAnswer(e)}>
-                        <label>
-                            <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
-                            {buttonField}
-                        </label>
-                    </form>
-                </div>
+            <main className="training">
+                {welcomeField}
+                {learningField}
                 {logoutButton}
-            </div>
+            </main>
 
         );
     }
