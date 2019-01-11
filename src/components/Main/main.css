@@ -1,7 +1,7 @@
 
 .splash-page{
   display: inline-block;
-  min-height: 1080px;
+  min-height: 94.4vh;
   min-width: 100%;
   background: url('/images/splash.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
