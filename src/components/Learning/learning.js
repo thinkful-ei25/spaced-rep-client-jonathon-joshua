@@ -10,7 +10,6 @@ export class Learning extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: null,
             answered: null,
             guesses: 0,
             right: 0
