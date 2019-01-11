@@ -40,14 +40,12 @@ export class Dashboard extends React.Component {
                     <button className="topicButton" value="food" onClick={(e) => this.startLearning(e)}>Food</button>
                     <button className="topicButton" value="places" onClick={(e) => this.startLearning(e)}>Places</button>
 
+                    <button className="topicButton" value="technology" onClick={(e) => this.startLearning(e)}>Technology</button>
+                    <button className="topicButton" value="locations" onClick={(e) => this.startLearning(e)}>Locations</button>
+
+                    <button className="topicButton" value="Directions" onClick={(e) => this.startLearning(e)}>Directions</button>
                     <button className="topicButton" value="phrases" onClick={(e) => this.startLearning(e)}>Phrases</button>
-                    <button disabled={true} className="topicButton" value="Locations" onClick={(e) => this.startLearning(e)}>Locations</button>
 
-                    <button disabled={true} className="topicButton" value="Directions" onClick={(e) => this.startLearning(e)}>Directions</button>
-                    <button disabled={true} className="topicButton" value="Destinations" onClick={(e) => this.startLearning(e)}>Destinations</button>
-
-                    <button disabled={true} className="topicButton" value="Descriptions" onClick={(e) => this.startLearning(e)}>Descriptions</button>
-                    <button disabled={true} className="topicButton" value="Technology" onClick={(e) => this.startLearning(e)}>Technology</button>
                 </div>
             </div>
         );
