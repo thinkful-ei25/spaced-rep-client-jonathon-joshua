@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 import LoginForm from './login-form';
-import './main.css';
+import './landing.css';
+
 
 export function LandingPage(props) {
     // If we are logged in redirect straight to the user's dashboard
@@ -22,7 +23,7 @@ export function LandingPage(props) {
     const login = (<LoginForm />);
     const greeting = (<div className="greeting">{greetingH1}<hr></hr> {greetingH2} {greetingP}</div>);
     const register = (<div className="register"><Link to="/register">{regButton}</Link></div>);
-    const greetBox = (<div className="welcome">{greeting}{login}{register}</div>);
+    const greetBox = (<div className="greetBox">{greeting}{login}{register}</div>);
 
     if (props.loggedIn) {
         return <Redirect to="/dashboard" />;

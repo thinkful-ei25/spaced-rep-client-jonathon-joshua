@@ -20,15 +20,8 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-#container { display:block; }
-
 html {
   box-sizing: border-box;
 }
 
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}

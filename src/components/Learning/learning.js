@@ -5,6 +5,7 @@ import { fetchProtectedData, updateDatabase } from '../../actions/protected-data
 import { logOut } from '../../actions/auth';
 import './learning.css';
 
+
 export class Learning extends React.Component {
     constructor(props) {
         super(props);
@@ -20,14 +21,17 @@ export class Learning extends React.Component {
         })
     }
 
-    async getNextQuestion(){
-        await this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.state.question,  this.state.answered));
+    async getNextQuestion() {
+        await this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.state.question, this.state.answered));
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         this.setState({
             question: this.props.protectedData
         })
     }
 
+    calculateScore() {
+        return "score";
+    }
     submitAnswer(e) {
         e.preventDefault();
         if (this.state.answered !== null) {
@@ -55,13 +59,12 @@ export class Learning extends React.Component {
     }
 
     render() {
-        if(this.state.question){
+        if (this.state.question) {
             word = this.state.question.esperantoWord;
         }
-        let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
         let questionField;
         let word = '';
-        if(this.state.question){
+        if (this.state.question) {
             word = this.state.question.esperantoWord;
         }
 
@@ -73,23 +76,24 @@ export class Learning extends React.Component {
         }
         let buttonField;
         this.state.answered !== null ? buttonField = (<button className="questionButton">next</button>) : buttonField = (<button className="questionButton">Submit</button>);
+        const welcomeField = (<div className="learningGreet">You are Learning: {this.props.location.state.category}</div>);
+        const score = (this.calculateScore());
+        const answer = (<form onSubmit={e => this.submitAnswer(e)}>
 
+            <label>
+                <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
+                {buttonField}
+            </label>
+        </form>);
+        let logoutButton = (<button onClick={e => this.logOut(e)}>Logout</button>);
+
+        const learningField = (<div className="questionArea"> {score}{questionField}{answer})</div>);
         return (
-            <div>
-                <h3 className="welcome">{this.props.location.state.category}</h3>
-                <div className="dashboard">
-                    <div className="question">
-                        {questionField}
-                    </div>
-                    <form onSubmit={e => this.submitAnswer(e)}>
-                        <label>
-                            <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
-                            {buttonField}
-                        </label>
-                    </form>
-                </div>
+            <main className="training">
+                {welcomeField}
+                {learningField}
                 {logoutButton}
-            </div>
+            </main>
 
         );
     }

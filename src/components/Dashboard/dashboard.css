@@ -1,22 +1,28 @@
 
-.dashboard{
-  /* position: absolute; */
-  border: 1px solid black;
-  top: 50%;
-  left: 50%;
-  width: 40%;
-  height: 50%;
-  margin-left: -20%;
-  margin-top: -12.5%;
-}
 
-.welcome{
-  margin-top: 3%;
-  font-size: 2.5em;
-  text-align: center;
-}
+.mainDashboard{
+    margin: auto;
+    width: 75%;
+    text-align: center;
+  }
+  
+  
+  
 
-.topicButton{
-  width: 50%;
-  height: 20%;
-}
+.hello{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 35px;
+  }
+  
+  .selector{
+    width: 66%;
+    height: 15vh;
+    margin: auto;
+  }
+  
+  .selector button {
+    width: 50%;
+    height: 100%;
+  }
+  
