@@ -21,8 +21,8 @@ export class Learning extends React.Component {
         await this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
     }
 
-    getNextQuestion(answered){
-        this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.props.protectedData,  answered));
+    getNextQuestion(answered) {
+        this.props.dispatch(updateDatabase(this.props.userId, this.props.location.state.category, this.props.protectedData, answered));
     }
 
     calculateScore() {
@@ -61,17 +61,18 @@ export class Learning extends React.Component {
     }
 
     render() {
-        if(this.props.protectedData){
+        if (this.props.protectedData) {
             word = this.props.protectedData.esperantoWord;
         }
         let questionField;
         let word = '';
-        if(this.props.protectedData){
+        if (this.props.protectedData) {
             word = this.props.protectedData.esperantoWord;
         }
 
         if (this.state.answered !== null) {
-            questionField = (<h3>{this.state.answered ? 'Correct!' : 'Wrong'}</h3>)
+            questionField = (<h3>{this.state.answered ? 'Correct!' : `Wrong, the correct answer 
+            was ${this.props.protectedData.esperantoAnswer}`}</h3>)
         }
         else {
             questionField = (<h3 className="questionWord">{word}</h3>);
