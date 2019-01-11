@@ -38,12 +38,18 @@ export class Learning extends React.Component {
             return;
         }
         if (this.input.value === this.props.protectedData.esperantoAnswer) {
+            let newGuesses = this.state.guesses += 1;
+            let newRight = this.state.right += 1;
             this.setState({
-                answered: true
+                answered: true,
+                guesses: newGuesses,
+                right: newRight
             });
         } else {
+            let newGuesses = this.state.guesses += 1;
             this.setState({
-                answered: false
+                answered: false,
+                guesses: newGuesses
             });
         }
         this.getNextQuestion(this.input.value === this.props.protectedData.esperantoAnswer);
