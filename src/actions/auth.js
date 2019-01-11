@@ -81,7 +81,6 @@ export const login = (username, password) => dispatch => {
 };
 
 export const logOut = () => (dispatch, getState) => {
-    const head = getState().protectedData.head;
     const authToken = getState().auth.authToken;
     const userId = getState().auth.currentUser._id;
     return fetch(`${API_BASE_URL}/users/${userId}`, {
@@ -91,7 +90,6 @@ export const logOut = () => (dispatch, getState) => {
         }
     })
         .then(res => normalizeResponseErrors(res))
-        .then(res => console.log(res))
         .then(dispatch(clearAuth()));
 };
 
