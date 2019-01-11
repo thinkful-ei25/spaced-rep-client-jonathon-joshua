@@ -37,6 +37,7 @@ export class Learning extends React.Component {
         answer = answer.replace(/\s+/g, '');
         this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         if (this.state.answered !== null) {
+            document.getElementById('input').value="";
             this.setState({
                 answered: null,
             })
@@ -76,7 +77,7 @@ export class Learning extends React.Component {
         }
 
         if (this.state.answered !== null) {
-            questionField = (<h3>{this.state.answered ? 'Correct!' : `Wrong, the correct answer 
+            questionField = (<h3 className="questionWord">{this.state.answered ? 'Correct!' : `Wrong, the correct answer 
             was ${this.props.protectedData.esperantoAnswer}`}</h3>)
         }
         else {
@@ -89,7 +90,7 @@ export class Learning extends React.Component {
         const answer = (<form onSubmit={e => this.submitAnswer(e)}>
 
             <label>
-                <input type="text" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
+                <input type="text" id="input" className="questionInput" placeholder="type your answer here" ref={node => (this.input = node)}></input>
                 {buttonField}
             </label>
         </form>);
