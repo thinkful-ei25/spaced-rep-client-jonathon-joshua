@@ -29,6 +29,12 @@ export class Learning extends React.Component {
     }
     submitAnswer(e) {
         e.preventDefault();
+        let guess = this.input.value.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+        let answer = this.props.protectedData.esperantoAnswer.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
+        guess = guess.toLowerCase();
+        answer = answer.toLowerCase();
+        guess = guess.replace(/\s+/g, '');
+        answer = answer.replace(/\s+/g, '');
         this.props.dispatch(fetchProtectedData(this.props.userId, this.props.location.state.category));
         if (this.state.answered !== null) {
             this.setState({
@@ -36,7 +42,7 @@ export class Learning extends React.Component {
             })
             return;
         }
-        if (this.input.value === this.props.protectedData.esperantoAnswer) {
+        if (guess === answer) {
             let newGuesses = this.state.guesses += 1;
             let newRight = this.state.right += 1;
             this.setState({
